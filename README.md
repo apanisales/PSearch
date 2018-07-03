@@ -3,7 +3,7 @@
 A Unix utility that recursively searches for matching file names
 
 - Detects the number of online cores and uses this number as the default upper bound for threads launched by the program
-    - Launch one thread per search term
+    - Launches one thread per search term
     - If a user were to specify more search terms than there are threads available, then the program uses a semaphore to wait until a thread finishes before starting another
 
 Usage:

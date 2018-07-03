@@ -6,7 +6,7 @@ A Unix utility that recursively searches for matching file names
     - Launch one thread per search term
     - If a user were to specify more search terms than there are threads available, then the program uses a semaphore to wait until a thread finishes before starting another
 
-Usage
+Usage:
 ```
 $ ./psearch [-eh] [-d directory] [-t threads] search_term1 search_term2 ... search_termN
 ```

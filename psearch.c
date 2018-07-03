@@ -20,9 +20,9 @@
 
 void print_usage(char *argv[]);
 void print_path(char * fullPathName, char * pathName, char * term);
-void search_directory(DIR * directory, char * dirName, void *opts);
-void *search_thread(void *opts);
-void strlower(char *string);
+void search_directory(DIR * directory, char * dirName, void * opts);
+void *search_thread(void * opts);
+void strlower(char * string);
 
 bool eFlag = false;
 char * startDirectory;
@@ -34,7 +34,12 @@ sem_t semaphore;
 * Checks if a path name is valid and prints it, if
 * it is
 *
-* @args Path name to test, search term
+* @args fullPathName 
+*            used to make sure the full path of the path name is printed if the path name is valid
+* @args pathName
+*            path name to test
+* @args term
+*            search term
 */
 void print_path(char * fullPathName, char * pathName, char * term) {
     char pathBuffer[PATH_MAX + 1];
@@ -60,9 +65,10 @@ void print_path(char * fullPathName, char * pathName, char * term) {
 * Converts all characters in a string to lowercase, if not
 * already lowercase
 *
-* @args String to convert to lowercase
+* @args string
+*           string to convert to lowercase
 */
-void strlower(char *string) {
+void strlower(char * string) {
     if (string != NULL) {
         int i = 0;
         for (i = 0; i < strlen(string); i++) {
@@ -77,9 +83,14 @@ void strlower(char *string) {
 * Recursively searches through a directory for file names that
 * contain a specific search term
 *
-* @args Pointer to directory to search, pointer to search term
+* @args directory
+*           pointer to directory to search
+* @args dirName
+*           pointer to name of directory
+* @args opts
+*           pointer to search term
 */
-void search_directory(DIR * directory, char * dirName, void *opts)
+void search_directory(DIR * directory, char * dirName, void * opts)
 {
     struct dirent * entry;
     DIR * minidir;
@@ -107,9 +118,10 @@ void search_directory(DIR * directory, char * dirName, void *opts)
 * search through a directory for file names that contain a specific 
 * search term
 *
-* @args Pointer to search term
+* @args opts
+*          pointer to search term
 */
-void *search_thread(void *opts)
+void *search_thread(void * opts)
 {
     search_directory(opendir(startDirectory), startDirectory, opts);
     sem_post(&semaphore);
@@ -121,7 +133,8 @@ void *search_thread(void *opts)
 *
 * Prints usage information
 *
-* @args Pointer to command line argument array
+* @args argv
+*          pointer to command line argument array
 */
 void print_usage(char *argv[])
 {
